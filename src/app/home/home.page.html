@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title data-test="title">
+      Pawn Simulation
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Pawn Simulation</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid data-test="chessBoard">
+    <ion-row *ngFor="let chessRow of chessBoardObj; let r = index">
+      <ion-col data-test="chessBoardSquares" [ngClass]="{'grey-box':calcBoxColor(r,c)}"
+      *ngFor="let chessCol of chessRow; let c = index;">
+      <img src="{{getImageOnIndex(chessCol)}}">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <section>
+    <ion-item data-test="x">
+      <ion-label>X</ion-label>
+      <ion-input #x placeholder="0 to 7" type="number"></ion-input>
+    </ion-item>
+    <ion-item data-test="y">
+      <ion-label>Y</ion-label>
+      <ion-input #y placeholder="0 to 7" type="number" ></ion-input>
+    </ion-item>
+    <ion-item data-test="f">
+      <ion-label>F</ion-label>
+      <ion-input #f placeholder="East, West, North, South" type="text"></ion-input>
+    </ion-item>
+    <ion-item data-test="c">
+      <ion-label>C</ion-label>
+      <ion-input #c placeholder="White, Black" type="text"></ion-input>
+    </ion-item>
+    <ion-button data-test="place-btn" class="ion-margin-start ion-margin-top" (click)="placePawn(x.value,y.value,f.value,c.value)">Place</ion-button>
+  </section>
+  <section>
+    <ion-item data-test="movex">
+      <ion-label>Move X</ion-label>
+      <ion-input #movex placeholder="placeholder" type="text"></ion-input>
+    </ion-item>
+    <ion-button data-test="movex-btn" class="ion-margin-start ion-margin-top" (click)="move(movex.value)">Move</ion-button>
+  </section>
+  <section class="ion-margin-start">
+    <header class="ion-margin-bottom ion-margin-top">Actions</header>
+    <ion-button data-test="move-btn" color="success" (click)="move(1)">Move Forward</ion-button>
+    <ion-button data-test="left-btn" color="warning" (click)="moveDirection('left')">Left</ion-button>
+    <ion-button data-test="right-btn" color="danger" (click)="moveDirection('right')">Right</ion-button>
+    <ion-button data-test="report-btn" (click)="reportData()">Report</ion-button>
+  </section>
+  <div class="ion-margin" data-test="report">
+    Output: <span *ngIf="report">{{report}}</span>
+  </div>
+</ion-content>
